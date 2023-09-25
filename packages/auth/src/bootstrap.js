@@ -7,8 +7,9 @@ import App from './app';
 // Mount function to start the app 
 const mount = (el, {
   defaultHistory,
-  onNavigate,
   initalPath,
+  onNavigate,
+  onSignIn,
 }) => {
   // Create memory history object to be used by react router
   // this ensures that the history object is siloed to the container
@@ -20,7 +21,7 @@ const mount = (el, {
   if (onNavigate) history.listen(onNavigate);
 
   // Render the marketing app
-  ReactDOM.render(<App history={history} />, el);
+  ReactDOM.render(<App history={history} onSignIn={onSignIn} />, el);
 
   return {
     onParentNavigate({
@@ -35,7 +36,7 @@ const mount = (el, {
 // If mode === 'development' and in isolation
 // mount application
 if (process.env.NODE_ENV === 'development') {
-  const devRoot = document.querySelector('#_marketing-isolation-dev-root');
+  const devRoot = document.querySelector('#_auth-isolation-dev-root');
   if (devRoot) {
     mount(devRoot, { 
       defaultHistory: createBrowserHistory()
